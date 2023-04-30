@@ -37,12 +37,6 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>7.3.2</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>me.jvt.cucumber</groupId>

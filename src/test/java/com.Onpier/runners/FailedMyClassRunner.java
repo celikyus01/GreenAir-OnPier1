@@ -1,6 +1,5 @@
 package com.Onpier.runners;
 
-
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
@@ -13,5 +12,6 @@ import org.junit.runner.RunWith;
         glue = "com/onPier/stepDefinitions"
 )
 
-public class FailedClassRunner {
+public class FailedMyClassRunner {
 }
+

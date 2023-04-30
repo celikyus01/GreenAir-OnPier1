@@ -1,91 +1,90 @@
 
 Feature: Checking the related web page
-
-    Background: For the scenarios in the feature file, user should be on the second page of the form
-      Given user is on Persönliche Daten eingeben page
-
-
-  Scenario Outline: User can fill the form with valid data
+  Background: For the scenarios in the feature file, user should be on the second page of the form
     Given user is on Persönliche Daten eingeben page
-    Given user is on Privatperson form
-    When user enters title "<Anrede>"
-    And user enters first name "<Vorname>"
-    And user enters surname "<Nachname>"
-    And user enters email adress "<E-Mail-Adresse>"
-    And user enters account holder "<Kontoinhaber>"
-    And user enters iban no "<IBAN>"
+    When user selects vehicle class
+    And user selects flexPramieBentragen package
+    And user uploads images of vehicle registration
+    And user clicks on "Weiter " button
+    Then user verifies title as "THG Prämie"
+
+
+  Scenario Outline: Form submission
+    When user selects title "<title>"
+    And user fills "Vorname" as "<firstName>"
+    And user fills "Nachname" as "<lastName>"
+    And user fills "E-Mail-Adresse" as "<email>"
+    And user fills "Kontoinhaber" as "<accountHolder>"
+    And user fills "IBAN" as "<IBAN>"
     And user clicks on Weiter button
     Then form is created with given personal information
-
+      | Anrede         |
+      | Vorname        |
+      | Nachname       |
+      | E-Mail-Adresse |
+      | Kontoinhaber   |
+      | IBAN           |
     Examples:
-      | Anrede | Vorname | Nachname | E-Mail-Adresse           | Kontoinhaber | IBAN                          |
-      | Herr   | John    | Doe      | anything%s@email.company | John Doe     | ZBDE 4578 9089 6556 4334 5400 |
+      | title | firstName | lastName | email                    | accountHolder | IBAN                          |
+      | Herr  | John      | Doe      | anything%s@email.company | John Doe      | ZBDE 4578 9089 6556 4334 5400 |
 
-  Scenario: user can not enter invalid name
-    Given user is on Privatperson form
-    When user enters a letter as a name
+
+
+  Scenario Outline: user can not enter invalid name
+    When user enters a letter as a vorname "<vornameLetter>"
+    And user clicks another field to fill and proceed
     Then error message appears under the Vorname field
 
+      Examples:
+      |vornameLetter|
+      |    a        |
 
-  Scenario: user can not enter invalid surname
-    Given user is on Privatperson form
-    When user enters a letter as a surname
+
+  Scenario Outline: user can not enter invalid surname
+    When user enters a letter as nachname "<nachnameLetter>"
+    And user clicks another placeholder to fill and proceed
     Then error message appears under the Nachname field
+    Examples:
+      | nachnameLetter |
+      | a              |
 
 
-  Scenario: Kontoinhaber(account holder) and the person name can be different
-    Given user is on Privatperson form
-    When user enters a different account holder name
+
+  Scenario Outline: Kontoinhaber(account holder) and the person name can be different
+    When user selects title "<title>"
+    And user fills "Vorname" as "<firstName>"
+    And user fills "Nachname" as "<lastName>"
+    And user fills "E-Mail-Adresse" as "<email>"
+    And user fills "Kontoinhaber" as "<accountHolder>"
+    And user fills "IBAN" as "<IBAN>"
+    And user clicks on Weiter button
     Then user verifies account holder name and person name can be different
+      Examples:
+      | title | firstName | lastName | email                    | accountHolder | IBAN                          |
+      | Herr  | John      | Doe      | anything%s@email.company | Elif Basbug   | ZBDE 4578 9089 6556 4334 5400 |
 
 
-  Scenario: Kontoinhaber(account holder) and the person name can be same
-    Given user is on Privatperson form
-    When user enters the Account holder name
-    Then user verifies Account holder name and person name can be same
 
-  Scenario: User fills the form with invalid email
-    Given user is on Privatperson form
-    When user enters invalid email
+  Scenario Outline: User fills the form with invalid email
+    When user selects title "<title>"
+    And user fills "Vorname" as "<firstName>"
+    And user fills "Nachname" as "<lastName>"
+    And user fills "E-Mail-Adresse" as "<email>"
+    And user fills "Kontoinhaber" as "<accountHolder>"
+    And user fills "IBAN" as "<IBAN>"
     And user clicks on Weiter button
     Then the form is created with invalid email
+      Examples:
+      | title | firstName | lastName | email                     | accountHolder | IBAN                          |
+      | Herr  | John      | Doe      | anything@..gmail...com....| John Doe      | ZBDE 4578 9089 6556 4334 5400 |
+      | Herr  | John      | Doe      | anything@..anythingcom....| John Doe      | ZBDE 4578 9089 6556 4334 5400 |
 
 
-  Scenario:  user can create another account with the same email
-    Given user is on Privatperson form
-    When user enters  the same email
-    And user clicks on Weiter button
-    Then new user is created with the same email
-
-
-  Scenario Outline: Account is created with valid IBAN
-    Given user is on Privatperson form
-    When user enters the "<IBAN>" number in the IBAN box
-    And user clicks on Weiter button
-    Then account is created
-
-    Examples:
-      | IBAN                                               |
-      | 1234 1234 1234 1                                   |
-      | 1234 1234 1234 12                                  |
-      | 1234 1234 1234 1234 1234                           |
-      | 1234 1234 1234 1234 1234 1234 1234 1234 1234 1234  |
-      | 1234 1234 1234 1234 1234 1234 1234 1234 1234 1234 1|
-
-
-  Scenario Outline: Account is not created with invalid IBAN
-    Given user is on Privatperson form
-    When user enters the invalid "<IBAN>" number in the IBAN box
-    Then warning message is on screen, under the IBAN box
-
-    Examples:
-      | IBAN                              |
-      | 1234 1234 1234                    |
-      | 1234 1234 12                      |
-      | 1234 1234                         |
-      | 1234 1                            |
+  @happypath
+  Scenario: User cancels form
+    And user clicks on Zurück button
+    Then user lands on previous page
 
 
 
 
-  Scenario: Data Validations
