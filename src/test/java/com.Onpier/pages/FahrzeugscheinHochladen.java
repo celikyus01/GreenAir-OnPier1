@@ -1,15 +1,15 @@
 package com.Onpier.pages;
 
 
+import lombok.Getter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+@Getter
 public class FahrzeugscheinHochladen extends BasePage{
-
     @FindBy(xpath = "//input[@id='Fahrzeugschein Vorderseite']")
-    public WebElement fahrzeugscheinVorderseite ;
+    private WebElement fahrzeugscheinVorderseite ;
 
     @FindBy(xpath = "//input[@id='Fahrzeugschein Rückseite']")
-    public WebElement fahrzeugscheinRuckseite;
-
+    private WebElement fahrzeugscheinRuckseite;
 }

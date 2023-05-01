@@ -3,7 +3,6 @@ package com.Onpier.stepDefinitions;
 import com.Onpier.pages.FahrzeugscheinHochladen;
 import com.Onpier.pages.FormPage;
 import com.Onpier.pages.LandingPage;
-import com.Onpier.utilities.BrowserUtils;
 import com.Onpier.utilities.ConfigurationReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -18,7 +17,7 @@ import java.util.Map;
 import static com.Onpier.utilities.BrowserUtils.*;
 import static org.junit.Assert.*;
 
-public class MyStepdefs {
+public class VehicleRegistrationsStepDefs {
 
     FormPage formPage = new FormPage();
     LandingPage landingPage = new LandingPage();
@@ -31,20 +30,20 @@ public class MyStepdefs {
 
     @When("user selects vehicle class")
     public void userSelectsVehicleClass() {
-        click(landingPage.klasseM1);
+        click(landingPage.getKlasseM1());
     }
 
     @And("user selects flexPramieBentragen package")
     public void userSelectsFlexPramieBentragenPackage() {
-        click(landingPage.flexPramieBentragen);
+        click(landingPage.getFlexPramieBentragen());
     }
 
     @And("user uploads images of vehicle registration")
     public void userUploadsImagesOfVehicleRegistration() {
         //to get the dynamic path of the image
         String path = System.getProperty("user.dir") + ConfigurationReader.get("imagePath");
-        sendKeys(fahrzeugscheinVorderseite.fahrzeugscheinVorderseite, path);
-        sendKeys(fahrzeugscheinVorderseite.fahrzeugscheinRuckseite, path);
+        sendKeys(fahrzeugscheinVorderseite.getFahrzeugscheinVorderseite(), path);
+        sendKeys(fahrzeugscheinVorderseite.getFahrzeugscheinRuckseite(), path);
     }
 
     @And("user clicks on {string} button")
@@ -67,12 +66,11 @@ public class MyStepdefs {
         if (value.contains("%s"))
             value = String.format(value, new Date().getTime());
         formPage.fill(label, value + Keys.ENTER);
-
     }
 
     @And("user clicks on Weiter button")
     public void userClicksOnWeiterButton() {
-        click(formPage.weiterButton);
+        click(formPage.getWeiterButton());
     }
 
     @Then("form is created with given personal information")
@@ -83,74 +81,25 @@ public class MyStepdefs {
         System.out.println("the validation of form data is done");
     }
 
-    @When("user enters a letter as a vorname {string}")
-    public void userEntersALetterAsAVorname(String vornameLetter) {
-        formPage.inputVorname.sendKeys(vornameLetter);
-    }
-
-    @And("user clicks another field to fill and proceed")
-    public void userClicksAnotherFieldToFillAndProceed() {
-        click(formPage.inputNachname);
-    }
-
-    @Then("error message appears under the Vorname field")
-    public void errorMessageAppearsUnderTheVornameField() {
-        assertTrue(formPage.vornameErrorMessage.isDisplayed());
-    }
-
     @When("user enters a letter as nachname {string}")
     public void userEntersALetterAsNachname(String nachnameLetter) {
-        formPage.inputNachname.sendKeys(nachnameLetter);
+        formPage.getInputNachname().sendKeys(nachnameLetter);
     }
-
-    @And("user clicks another placeholder to fill and proceed")
-    public void userClicksAnotherPlaceholderToFillAndProceed() {
-        click(formPage.inputEMailAdresse);
-    }
-//
-//    @Then("error message appears under the Nachname field")
-//    public void errorMessageAppearsUnderTheNachnameField() {
-//        formPage.isMessageDisplayed()
-//
-//    }
-
 
     @Then("user verifies account holder name and person name can be different")
     public void userVerifiesAccountHolderNameAndPersonNameCanBeDifferent() {
         assertNotEquals(formPage.name, formPage.kontoinHaber);
     }
 
-    @Then("the form is created with valid email")
-    public void formIsCreatedWithvalidEmail(List<String> list) {
-        for (String email : list) {
-            formPage.checkInfo(email);
-        }
-        System.out.println("Form created with invalid e mail");
-    }
-
-    @Then("the form is NOT created with invalid email")
-    public void formIsCreatedWithInvalidEmail(List<String> list) {
-        for (String email : list) {
-            formPage.checkInfo(email);
-        }
-        System.out.println("Form created with invalid e mail");
-    }
-
     @When("user clicks on Zurück button")
     public void userClicksOnZurückButton() {
-        formPage.zurückButton.click();
+        formPage.getZurückButton().click();
     }
 
     @Then("user lands on previous page")
     public void userLandsOnPreviousPage() {
         assertEquals("THG Prämie", getTitle());
     }
-
-
-//    @Then("Validate the {string} message")
-//    public void validateTheMessage(String message) {
-//        formPage.isMessageDisplayed(message);
-//    }
 
     @Then("user validates the validation messages")
     public void userValidatesTheValidationMessages(List<Map<String, String>> data) {

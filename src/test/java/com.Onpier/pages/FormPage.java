@@ -1,58 +1,39 @@
 package com.Onpier.pages;
 
 import com.Onpier.utilities.BrowserUtils;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+@Getter
 public class FormPage extends BasePage {
-
-    @FindBy(xpath = "//input[@id='mat-radio-2-input']")
-    public WebElement privatPerson;
-
     @FindBy(id = "mat-select-value-1")
-    public WebElement selectAnrede;
+    private WebElement selectAnrede;
 
     @FindBy(xpath = "//input[@placeholder='Max']")
-    public WebElement inputVorname;
+    private WebElement inputVorname;
 
     @FindBy(xpath = "//input[@placeholder='Mustermann']")
-    public WebElement inputNachname;
+    private WebElement inputNachname;
 
     @FindBy(xpath = "//input[@placeholder='max.mustermann@muster.de']")
-    public WebElement inputEMailAdresse;
+    private WebElement inputEMailAdresse;
 
     @FindBy(xpath = "//input[@placeholder='Max Mustermann']")
-    public WebElement inputKontoinhaber;
+    private WebElement inputKontoinhaber;
 
     @FindBy(xpath = "//input[@placeholder='z.B. DE45 7890 8965 5643 3454 00']")
-    public WebElement inputIBAN;
+    private WebElement inputIBAN;
 
     @FindBy(xpath = "(//div[.='Weiter '])[2]")
-    public WebElement weiterButton;
+    private WebElement weiterButton;
 
     @FindBy(xpath = "(//div/button[.=' Zurück '])[2]")
-    public WebElement zurückButton;
-
-    @FindBy(linkText = " Der Vorname muss mindestens zwei Zeichen lang sein.")
-    public WebElement vornameErrorMessage;
-
-    @FindBy(linkText = " Bitte geben Sie Ihren Nachnamen ein.")
-    public WebElement nachnameErrorMessage;
-
+    private WebElement zurückButton;
 
     public static String name = "John";
     public static String kontoinHaber = "Elif Basbug";
-
-
-    public void login(String vorname, String nachname, String email, String kontainhaber, String iban) {
-        selectAnrede.click();
-        inputVorname.sendKeys(vorname);
-        inputNachname.sendKeys(nachname);
-        inputEMailAdresse.sendKeys(email);
-        inputKontoinhaber.sendKeys(kontainhaber);
-        inputIBAN.sendKeys(iban);
-    }
 
     public void selectTitle(String title) {
         BrowserUtils.click(selectAnrede);
@@ -61,14 +42,10 @@ public class FormPage extends BasePage {
     }
 
     public String getValidationMessageByFieldName(String fieldName) {
-
-
         By by = By.xpath(String.format("//label[.='%s']/../..//p", fieldName));
-
         if (BrowserUtils.isPresent(by))
             return BrowserUtils.getElemet(by).getText();
         else
             return "none";
     }
-
 }
