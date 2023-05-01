@@ -3,6 +3,7 @@ package com.Onpier.pages;
 import com.Onpier.utilities.BrowserUtils;
 import com.Onpier.utilities.Driver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -28,7 +29,8 @@ public abstract class BasePage {
     public void fill(String labelName, String value) {
         String xpath = String.format("//label[.='%s']/..//input", labelName);
         WebElement element = BrowserUtils.getElemet(By.xpath(xpath));
-        BrowserUtils.sendKeys(element, value);
+        element.clear();
+        BrowserUtils.sendKeys(element, value+ Keys.TAB);
     }
 
     public void checkInfo(String labelName){

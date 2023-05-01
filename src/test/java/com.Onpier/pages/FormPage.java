@@ -34,15 +34,15 @@ public class FormPage extends BasePage {
     @FindBy(xpath = "(//div/button[.=' Zurück '])[2]")
     public WebElement zurückButton;
 
-    @FindBy(linkText=" Der Vorname muss mindestens zwei Zeichen lang sein.")
-    public WebElement VornameErrorMessage;
+    @FindBy(linkText = " Der Vorname muss mindestens zwei Zeichen lang sein.")
+    public WebElement vornameErrorMessage;
 
-    @FindBy(linkText=" Bitte geben Sie Ihren Nachnamen ein.")
-    public WebElement NachnameErrorMessage;
+    @FindBy(linkText = " Bitte geben Sie Ihren Nachnamen ein.")
+    public WebElement nachnameErrorMessage;
 
 
-    public static String name= "John";
-    public static String kontoinHaber="Elif Basbug";
+    public static String name = "John";
+    public static String kontoinHaber = "Elif Basbug";
 
 
     public void login(String vorname, String nachname, String email, String kontainhaber, String iban) {
@@ -54,10 +54,21 @@ public class FormPage extends BasePage {
         inputIBAN.sendKeys(iban);
     }
 
-    public void selectTitle(String title){
+    public void selectTitle(String title) {
         BrowserUtils.click(selectAnrede);
-        String xpath= String.format("//*[.='%s']", title);
+        String xpath = String.format("//*[.='%s']", title);
         BrowserUtils.click(By.xpath(xpath));
+    }
+
+    public String getValidationMessageByFieldName(String fieldName) {
+
+
+        By by = By.xpath(String.format("//label[.='%s']/../..//p", fieldName));
+
+        if (BrowserUtils.isPresent(by))
+            return BrowserUtils.getElemet(by).getText();
+        else
+            return "none";
     }
 
 }
