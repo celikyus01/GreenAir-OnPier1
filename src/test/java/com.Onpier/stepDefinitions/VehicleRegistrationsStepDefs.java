@@ -4,6 +4,7 @@ import com.Onpier.pages.FahrzeugscheinHochladen;
 import com.Onpier.pages.FormPage;
 import com.Onpier.pages.LandingPage;
 import com.Onpier.utilities.ConfigurationReader;
+import static com.Onpier.utilities.Log.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -53,11 +54,13 @@ public class VehicleRegistrationsStepDefs {
 
     @Then("user verifies title as {string}")
     public void userVerifiesTitleAs(String expectedTitle) {
+        log("Verifying title as "+ expectedTitle);
         assertEquals(getTitle(), expectedTitle);
     }
 
     @When("user selects title {string}")
     public void userEntersTitle(String title) {
+        log("Selecting title as "+ title);
         formPage.selectTitle(title);
     }
 
@@ -78,7 +81,7 @@ public class VehicleRegistrationsStepDefs {
         for (String each : list) {
             formPage.checkInfo(each);
         }
-        System.out.println("the validation of form data is done");
+        log("the validation of form data is done");
     }
 
     @When("user enters a letter as nachname {string}")
@@ -107,7 +110,7 @@ public class VehicleRegistrationsStepDefs {
             String label = datum.get("label");
             String value = datum.get("value") == null ? "" : datum.get("value");
             String expectedMessage = datum.get("expectedMessage");
-            System.out.println(String.format("validating %s field against %s", label, value));
+            log(String.format("validating %s field against %s", label, value));
             formPage.fill(label, value);
             String actualMessage = formPage.getValidationMessageByFieldName(label);
             assertEquals(expectedMessage, actualMessage);
