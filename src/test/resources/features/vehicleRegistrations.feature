@@ -41,7 +41,6 @@ Feature: Checking the related web page
       | title | firstName | lastName | email                    | accountHolder | IBAN                          |
       | Herr  | John      | Doe      | anything%s@email.company | Elif Basbug   | ZBDE 4578 9089 6556 4334 5400 |
 
-
   Scenario:  Field data validations
     Then user validates the validation messages
       | label          | value                          | expectedMessage                                      |
