@@ -32,9 +32,6 @@ public class FormPage extends BasePage {
     @FindBy(xpath = "(//div/button[.=' Zurück '])[2]")
     private WebElement zurückButton;
 
-    public static String name = "John";
-    public static String kontoinHaber = "Elif Basbug";
-
     public void selectTitle(String title) {
         BrowserUtils.click(selectAnrede);
         String xpath = String.format("//*[.='%s']", title);

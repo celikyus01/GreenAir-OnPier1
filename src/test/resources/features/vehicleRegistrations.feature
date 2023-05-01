@@ -27,18 +27,6 @@ Feature: Checking the related web page
     Examples:
       | title | firstName | lastName | email                    | accountHolder | IBAN                          |
       | Herr  | John      | Doe      | anything%s@email.company | John Doe      | ZBDE 4578 9089 6556 4334 5400 |
-
-  Scenario Outline: Kontoinhaber(account holder) and the person name can be different
-    When user selects title "<title>"
-    And user fills "Vorname" as "<firstName>"
-    And user fills "Nachname" as "<lastName>"
-    And user fills "E-Mail-Adresse" as "<email>"
-    And user fills "Kontoinhaber" as "<accountHolder>"
-    And user fills "IBAN" as "<IBAN>"
-    And user clicks on "Weiter " button
-    Then user verifies account holder name and person name can be different
-    Examples:
-      | title | firstName | lastName | email                    | accountHolder | IBAN                          |
       | Herr  | John      | Doe      | anything%s@email.company | Elif Basbug   | ZBDE 4578 9089 6556 4334 5400 |
 
   Scenario:  Field data validations

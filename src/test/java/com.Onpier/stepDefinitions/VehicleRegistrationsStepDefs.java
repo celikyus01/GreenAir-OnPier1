@@ -89,11 +89,6 @@ public class VehicleRegistrationsStepDefs {
         formPage.getInputNachname().sendKeys(nachnameLetter);
     }
 
-    @Then("user verifies account holder name and person name can be different")
-    public void userVerifiesAccountHolderNameAndPersonNameCanBeDifferent() {
-        assertNotEquals(formPage.name, formPage.kontoinHaber);
-    }
-
     @When("user clicks on Zurück button")
     public void userClicksOnZurückButton() {
         formPage.getZurückButton().click();
